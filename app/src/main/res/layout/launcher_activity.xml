@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/videoTagActivityDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VideoTagActivity (Default)"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/videoTagActivityHwa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VideoTagActivity (HWA)"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/videoTagActivitySwr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VideoTagActivity (SWR)"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/videoTagActivityActivityFlag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VideoTagActivity (Activity Flag)"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

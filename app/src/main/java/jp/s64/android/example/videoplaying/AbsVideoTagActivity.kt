@@ -5,10 +5,12 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.webkit.WebView
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import jp.s64.android.example.videoplaying.databinding.VideoTagActivityBinding
@@ -72,6 +74,24 @@ abstract class AbsVideoTagActivity : AppCompatActivity() {
             }
         }
 
+        binding.invisibleProgress.setOnClickListener {
+            getProgressBars().forEach {
+                it.visibility = View.INVISIBLE
+            }
+        }
+
+        binding.goneProgress.setOnClickListener {
+            getProgressBars().forEach {
+                it.visibility = View.GONE
+            }
+        }
+
+        binding.visibleProgress.setOnClickListener {
+            getProgressBars().forEach {
+                it.visibility = View.VISIBLE
+            }
+        }
+
         binding.addWebView.setOnClickListener {
             addWebView()
         }
@@ -91,32 +111,64 @@ abstract class AbsVideoTagActivity : AppCompatActivity() {
     }
 
     private fun getWebViews(): List<WebView> {
-        return binding.webViewContainer.children.map { it as WebView }.toList()
+        return binding.webViewContainer
+                .children.map { it as FrameLayout }
+                .map { it.children.find { it is WebView } as WebView }
+                .toList()
+    }
+
+    private fun getProgressBars(): List<ProgressBar> {
+        return binding.webViewContainer
+                .children.map { it as FrameLayout }
+                .map { it.children.find { it is ProgressBar } as ProgressBar }
+                .toList()
     }
 
     private fun addWebView() {
-        val webView = WebView(binding.root.context).apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            webViewLayerType?.let {
-                setLayerType(it, null)
-            }
-            settings.javaScriptEnabled = true
-            loadDataWithBaseURL(
-                "https://example.com",
-                BODY,
-                "text/html",
-                Charsets.UTF_8.name(),
-                null
-            )
-        }.also {
+        val myContainer = FrameLayout(binding.root.context).also {
             binding.webViewContainer.addView(
-                it,
-                FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                )
+                    it,
+                    FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                    )
             )
+        }.also { frame ->
+            val webView = WebView(frame.context).apply {
+                setBackgroundColor(Color.TRANSPARENT)
+                webViewLayerType?.let {
+                    setLayerType(it, null)
+                }
+                settings.javaScriptEnabled = true
+                loadDataWithBaseURL(
+                        "https://example.com",
+                        BODY,
+                        "text/html",
+                        Charsets.UTF_8.name(),
+                        null
+                )
+            }.also {
+                frame.addView(
+                        it,
+                        FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.MATCH_PARENT,
+                                FrameLayout.LayoutParams.WRAP_CONTENT,
+                        )
+                )
+            }
+            val progress = ProgressBar(frame.context, null, android.R.attr.progressBarStyle).also {
+                frame.addView(
+                        it,
+                        FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.WRAP_CONTENT,
+                                FrameLayout.LayoutParams.WRAP_CONTENT,
+                                Gravity.CENTER
+                        )
+                )
+            }
         }
+
+
     }
 
 }

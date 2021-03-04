@@ -53,6 +53,27 @@
             android:text="Add WebView"
             tools:ignore="HardcodedText" />
 
+        <Button
+            android:id="@+id/visibleProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="progress: visible"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/invisibleProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="progress: invisible"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/goneProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="progress: gone"
+            tools:ignore="HardcodedText" />
+
         <EditText
             android:id="@+id/scriptEditor"
             android:layout_width="match_parent"
